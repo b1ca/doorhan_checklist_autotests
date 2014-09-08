@@ -224,11 +224,11 @@ class Basetest(unittest.TestCase):
         self.wait_until_jquery(15)
         self.driver.find_element_by_xpath("//a[.='%s']" % section_name).click()
         import time
-        time.sleep(1)
+        time.sleep(3)
         self.driver.find_element_by_css_selector("a.empty-add-elemnt").click()
-        time.sleep(1)
+        time.sleep(3)
         el_text = self.choose_random_element_from_dict("")
-        time.sleep(1)
+        time.sleep(3)
         self.assertTrue(len(self.driver.find_elements_by_xpath("//td[.='%s']" % el_text)) >= 1)
 
     def change_element_in_section(self, section_name, number_of_pieces):
@@ -244,7 +244,7 @@ class Basetest(unittest.TestCase):
         self.driver.find_element_by_xpath("//a[.='%s']" % section_name).click()
         self.driver.find_element_by_css_selector("span[class*='popup-list-link']").click()
         self.driver.find_element_by_css_selector("a#specification-edit-elem-link").click()
-        self.wait_until_jquery(5)
+        self.wait_until_jquery(15)
         self.driver.find_element_by_css_selector('.minict_first').click()
         self.assertTrue(self.driver.find_element_by_css_selector(
             "#OrderProductSpecificationModel_amount").get_attribute("value") == number_of_pieces)
