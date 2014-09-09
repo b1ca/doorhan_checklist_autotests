@@ -206,7 +206,7 @@ class TestScenario1(Basetest):
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
 
-        #step30
+        #step30#
         self.driver.find_element_by_css_selector("a[onclick*='#outOrder']").click()
         self.driver.find_elements_by_xpath("//span[@class='ui-button-text' and .='Да']")[-1].click()
 
