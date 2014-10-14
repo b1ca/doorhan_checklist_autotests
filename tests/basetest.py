@@ -12,6 +12,7 @@ from testconfig import config
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.remote.remote_connection import LOGGER
+from selenium.webdriver.support import expected_conditions as EC
 
 
 URL = 'http://146.185.169.28/doorhan_test/'
@@ -77,6 +78,9 @@ class Basetest(unittest.TestCase):
     def wait_until_jquery(self, seconds_to_wait):
         jquery_active = lambda x: self.driver.execute_script("return jQuery.active == 0")
         WebDriverWait(self.driver, seconds_to_wait).until(jquery_active)
+
+    def wait_until_alert(self, seconds_to_wait):
+        WebDriverWait(self.driver, seconds_to_wait).until(EC.alert_is_present())
 
     def strings_to_search(self):
         return self.driver.find_elements_by_css_selector("span[style = \"cursor:pointer;\"]")[-1].text
@@ -160,7 +164,7 @@ class Basetest(unittest.TestCase):
     def go_next_and_assert_graphic_cards_view(self):
         self.go_next()
         self.wait_until_jquery(60)
-        self.assertIn("constructor/order/graphicCardsView", self.driver.current_url)
+        self.assertIn("constructor/order/graphicCards", self.driver.current_url)
 
     def draw_window(self):
         self.driver.find_element_by_css_selector("rect[id = rpanel1]").click()
@@ -258,7 +262,7 @@ class Basetest(unittest.TestCase):
         self.assertTrue(len(self.driver.find_elements_by_xpath("//td[.='%s']" % el_text)) >= 1)
 
     def go_next_and_assert_errors_on_page(self):
-        req_num = len(self.driver.find_elements_by_css_selector("span.required"))
+        req_num = len(self.driver.find_elements_by_css_selector("span.required")) - 1
         self.go_next()
         self.wait_until_jquery(5)
         error_num = len(

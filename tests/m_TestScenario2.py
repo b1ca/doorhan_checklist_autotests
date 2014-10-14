@@ -4,6 +4,7 @@ import random
 import unittest
 from selenium.common.exceptions import NoSuchElementException
 from basetest import Basetest
+import time
 
 
 class TestScenario2(Basetest):
@@ -17,7 +18,8 @@ class TestScenario2(Basetest):
         self.driver.find_element_by_css_selector("a[href$='order/create']").click()
         self.driver.find_element_by_css_selector("#submit").click()
         self.assertTrue(
-            len(self.driver.find_elements_by_xpath("//div[@class='errorMessage' and not(@style)]")) == 6
+            len(self.driver.find_elements_by_xpath(
+                "//div[@class='errorMessage' and not(contains(@style, 'display'))]")) == 6
         )
 
         #step03
@@ -30,6 +32,8 @@ class TestScenario2(Basetest):
         self.driver.find_element_by_css_selector("#CustomerModel_name").send_keys('Фамилия')
         self.driver.find_element_by_css_selector("#CustomerModel_phone").send_keys('1111111')
         self.driver.find_element_by_css_selector("#CustomerModel_address").send_keys('Адрес')
+
+        time.sleep(3)
 
         self.driver.find_element_by_css_selector("#OrderModel_measurementDate").click()
         self.driver.find_element_by_css_selector(".ui-datepicker-calendar tr:nth-of-type(2) td:nth-of-type(4)").click()
@@ -44,6 +48,7 @@ class TestScenario2(Basetest):
 
         #step04
         self.driver.find_element_by_css_selector('a[href*="addProduct"]').click()
+        self.wait_until_jquery(5)
         self.driver.find_element_by_css_selector("#next").click()
         alert = self.driver.switch_to.alert
         self.assertTrue(alert.text == 'Необходимо выбрать изделие!')
@@ -85,6 +90,8 @@ class TestScenario2(Basetest):
 
         #step10
         do_action(["checkbox", ["Облицовка молдингом"]])
+        self.driver.switch_to.alert.accept()
+        do_action(["checkbox", ["Автоматический подбор шага"]])
         do_action(["option", ["Вариант облицовки", "вариант 2"]])
         do_action(["option", ["Цвет облицовки", "металлик"]])
         self.go_next_and_assert_string("Встраиваемые объекты")
@@ -102,6 +109,7 @@ class TestScenario2(Basetest):
         self.go_next_and_assert_string("Комплектация")
 
         #step14
+        time.sleep(3)
         self.go_next_and_assert_string("Дополнительно")
 
         #step15
@@ -123,7 +131,7 @@ class TestScenario2(Basetest):
             springs = self.driver.find_elements_by_css_selector(
                 "#DrumsAndSpringsCalculationMI_formSelectedSprings option")
             # springs[random.randrange(1, len(springs))].click()
-            springs[0].click()
+            springs[-1].click()
         except (NoSuchElementException, ValueError):
             print "Пружин или барабанов нет."
         do_action(["option", ["Число валов", "1"]])
@@ -149,8 +157,13 @@ class TestScenario2(Basetest):
         self.go_next_and_assert_graphic_cards_view()
 
         #step21
+        self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
+        self.driver.switch_to.alert.accept()
+        self.wait_until_alert(60)
+        self.driver.switch_to.alert.accept()
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        self.wait_until_jquery(5)
         self.driver.find_element_by_css_selector("a[href*='/order/update/id/']").click()
 
         #step22
@@ -161,9 +174,10 @@ class TestScenario2(Basetest):
         self.choose_first_analog_element()
 
         #step23
+        self.wait_until_jquery(5)
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
-        self.wait_until_jquery(5)
+        self.wait_until_jquery(15)
         self.driver.find_element_by_css_selector("#outSavePager").click()
         self.driver.find_element_by_css_selector("span[class*=popup-list-link]").click()
         self.driver.find_element_by_css_selector('a[href*="/specification/"]').click()

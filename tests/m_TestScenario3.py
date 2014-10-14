@@ -4,6 +4,7 @@ import random
 import unittest
 from selenium.common.exceptions import NoSuchElementException
 from basetest import Basetest
+import time
 
 
 class TestScenario3(Basetest):
@@ -26,6 +27,8 @@ class TestScenario3(Basetest):
         self.driver.find_element_by_css_selector("#CustomerModel_phone").send_keys('1111111')
         self.driver.find_element_by_css_selector("#CustomerModel_address").send_keys('Адрес')
 
+        time.sleep(3)
+
         self.driver.find_element_by_css_selector("#OrderModel_measurementDate").click()
         self.driver.find_element_by_css_selector(".ui-datepicker-calendar tr:nth-of-type(2) td:nth-of-type(4)").click()
 
@@ -39,6 +42,7 @@ class TestScenario3(Basetest):
 
         #step04
         self.driver.find_element_by_css_selector('a[href*="addProduct"]').click()
+        self.wait_until_jquery(5)
         self.driver.find_element_by_xpath("//span[text() = \"Гаражные\"]").click()
         self.driver.find_element_by_xpath("//span[text() = \"Секционные\"]").click()
         self.driver.find_element_by_xpath("//a[text() = \"RSD 02\"]").click()
@@ -78,6 +82,7 @@ class TestScenario3(Basetest):
         #step08
         do_action(["option", ["Вариант облицовки", "Вариант 1"]])
         do_action(["option", ["Расположение рисунка", "По центру"]])
+        self.wait_until_jquery(5)
         self.go_next_and_assert_string("Встраиваемые объекты")
 
         #step09
@@ -97,6 +102,7 @@ class TestScenario3(Basetest):
         self.go_next_and_assert_string("Комплектация")
 
         #step12
+        time.sleep(3)
         self.go_next_and_assert_string("Дополнительно")
 
         #step13
@@ -114,18 +120,24 @@ class TestScenario3(Basetest):
         do_action(["uncheckbox", ["Использовать \"короткие изгибы\""]])
         do_action(["uncheckbox", ["Использовать соединительные пластины под клепатель"]])
         do_action(["uncheckbox", ["Использовать соединительные пластины"]])
-        self.go_next_and_assert_string("Расчет пружин и барабанов")
-
+        # self.go_next_and_assert_string("Расчет пружин и барабанов")
+        self.go_next()
+        self.wait_until_alert(10)
+        self.driver.switch_to.alert.accept()
+        self.assert_string("Расчет пружин и барабанов")
         #step14
         try:
             do_action(["option", ["Выбранные барабаны", "M102 H2250 (OMI 12)"]])
             do_action(["option", ["Количество пружин", "2"]])
             do_action(["option", ["Количество циклов", "12500"]])
-            springs = self.driver.find_elements_by_css_selector(
-                "#DrumsAndSpringsCalculationMI_formSelectedSprings option")
-            springs[0].click()
         except (NoSuchElementException, ValueError):
             print "Пружин или барабанов нет."
+        try:
+            springs = self.driver.find_elements_by_css_selector(
+                "#DrumsAndSpringsCalculationMI_formSelectedSprings option")
+            springs[-1].click()
+        except ValueError:
+            print "can't choose last spring."
         do_action(["option", ["Число валов", "1"]])
         do_action(["option", ["Выбранные валы", "25x25516"]])
         # self.go_next_and_assert_string("Дополнительные материалы")
@@ -149,8 +161,14 @@ class TestScenario3(Basetest):
         self.go_next_and_assert_graphic_cards_view()
 
         #step19
+        self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
+        self.driver.switch_to.alert.accept()
+        self.wait_until_alert(120)
+        self.driver.switch_to.alert.accept()
+
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        self.wait_until_jquery(5)
 
         #step20
         self.driver.find_element_by_css_selector("a[onclick*='#outOrder']").click()

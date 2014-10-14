@@ -14,7 +14,7 @@ class TestScenario1(Basetest):
 
         order_name = ORDER_NAME_1C
         if 'debug' in config:
-            order_name = "MSВДВ060641"
+            order_name = "MSВДВ096701"
         print order_name
         year = "2014"
 
@@ -35,9 +35,9 @@ class TestScenario1(Basetest):
         #step05
         do_action(["option", ["Выберите тип панелей", "Без защиты от защемления"]])
         do_action(["option", ["Выберите дизайн панелей", "Стандартная"]])
-        do_action(["option", ["Выберите 2-ой дизайн панелей", "Волна"]])
-        do_action(["option", ["Выберите структуру панелей", "Гладкая - Нстукко"]])
-        do_action(["option", ["Выберите внешний цвет панелей", "RAL9003"]])
+        do_action(["option", ["Выберите 2-ой дизайн панелей", "Без волны"]])
+        do_action(["option", ["Выберите структуру панелей", "Нстукко - Нстукко"]])
+        do_action(["option", ["Выберите внешний цвет панелей", "RAL5005"]])
         do_action(["option", ["Выберите внутренний цвет панелей", "RAL9003"]])
         do_action(["option", ["Выберите типоразмеры", "475+500+525+550+575"]])
         try:
@@ -53,7 +53,9 @@ class TestScenario1(Basetest):
         self.go_next_and_assert_string("Облицовка молдингами")
 
         #step06
-        do_action(["checkbox", ["Облицовка молдингом"]])
+        # do_action(["checkbox", ["Облицовка молдингом"]])
+        # self.driver.switch_to.alert.accept()
+        # do_action(["checkbox", ["Автоматический подбор шага"]])
         self.go_next_and_assert_string("Встраиваемые объекты")
 
         #step07
@@ -71,17 +73,19 @@ class TestScenario1(Basetest):
         self.go_next_and_assert_string("Дополнительно")
 
         #step11
-        do_action(["checkbox", ["Крепление к потолку старое"]])
-        do_action(["option", ["Механизм защиты пружин", "Давать"]])
-        do_action(["option", ["Механизм защиты троса", "Защита от разрыва"]])
-        do_action(["checkbox", ["Использовать облегченные профили"]])
-        do_action(["option", ["Услуги по проему", "Формирование"]])
-        do_action(["checkbox", ["Новый торсионный механизм(если возможно)"]])
-        do_action(["checkbox", ["Комплект направляющих и угловых стоек"]])
-        do_action(["option", ["Приоритет выбора пружин", "Справа"]])
-        do_action(["checkbox", ["Выдавать только средние крышки"]])
-        do_action(["option", ["Боковая крышка", "RAL 9003"]])
+        do_action(['option', ['Тип будущей установки привода', 'Нет']])
+        # do_action(["checkbox", ["Крепление к потолку старое"]])
+        # do_action(["option", ["Механизм защиты пружин", "Давать"]])
+        # do_action(["option", ["Механизм защиты троса", "Защита от разрыва"]])
+        # do_action(["checkbox", ["Использовать облегченные профили"]])
+        # do_action(["option", ["Услуги по проему", "Формирование"]])
+        # do_action(["checkbox", ["Новый торсионный механизм(если возможно)"]])
+        # do_action(["checkbox", ["Комплект направляющих и угловых стоек"]])
+        # do_action(["option", ["Приоритет выбора пружин", "Справа"]])
+        # do_action(["checkbox", ["Выдавать только средние крышки"]])
+        # do_action(["option", ["Боковая крышка", "RAL 9003"]])
 
+        self.wait_until_jquery(15)
         self.go_next()
         # self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
         # self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
@@ -89,15 +93,16 @@ class TestScenario1(Basetest):
 
         #step12
         try:
-            do_action(["option", ["Выбранные барабаны", "M102 H2250 (OMI 8)"]])
-            springs = self.driver.find_elements_by_css_selector(
-                "#DrumsAndSpringsCalculationMI_formSelectedSprings option")
-            # springs[random.randrange(1, len(springs))].click()
-            springs[0].click()
+            do_action(["option", ["Выбранные барабаны", "M203 H9570 (OMI 32)"]])
         except (NoSuchElementException, ValueError):
             print "Пружин или барабанов нет."
+
         do_action(["option", ["Количество пружин", "2"]])
         do_action(["option", ["Количество циклов", "10000"]])
+        self.wait_until_jquery(15)
+        springs = self.driver.find_elements_by_css_selector(
+            "#DrumsAndSpringsCalculationMI_formSelectedSprings option")
+        springs[-1].click()
         do_action(["option", ["Число валов", "1"]])
         do_action(["option", ["Выбранные валы", "25x25018"]])
 
@@ -206,7 +211,7 @@ class TestScenario1(Basetest):
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
 
-        #step30#
+        #step30
         self.driver.find_element_by_css_selector("a[onclick*='#outOrder']").click()
         self.driver.find_elements_by_xpath("//span[@class='ui-button-text' and .='Да']")[-1].click()
 
