@@ -159,7 +159,7 @@ class TestScenario2(Basetest):
         #step21
         self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
         self.driver.switch_to.alert.accept()
-        self.wait_until_alert(60)
+        self.wait_until_alert(120)
         self.driver.switch_to.alert.accept()
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
