@@ -163,7 +163,7 @@ class Basetest(unittest.TestCase):
 
     def go_next_and_assert_graphic_cards_view(self):
         self.go_next()
-        self.wait_until_jquery(60)
+        self.wait_until_jquery(120)
         self.assertIn("constructor/order/graphicCards", self.driver.current_url)
 
     def draw_window(self):
@@ -238,22 +238,30 @@ class Basetest(unittest.TestCase):
     def change_element_in_section(self, section_name, number_of_pieces):
         self.driver.find_element_by_css_selector("span[class*='popup-list-link']").click()
         self.driver.find_element_by_css_selector("a#specification-edit-elem-link").click()
-        self.driver.find_element_by_css_selector('.minict_first').click()
-        num_of_pieces = self.driver.find_element_by_css_selector("#OrderProductSpecificationModel_amount")
+        self.wait_until_jquery(30)
+        # self.driver.find_element_by_css_selector('.minict_first').click()
+        num_of_pieces = self.driver.find_element_by_css_selector("#OrderProductSpecificationModel_count")
         num_of_pieces.clear()
         num_of_pieces.send_keys(number_of_pieces)
+
+        checkbox_text = "Цех"
+        self.driver.find_elements_by_css_selector('.ui-multiselect')[0].click()
+        self.driver.find_elements_by_xpath("//label/span[.='%s']/../input" % checkbox_text)[-1].click()
+        self.wait_until_jquery(5)
+
         self.driver.find_element_by_css_selector("a[onclick*='changeElementParameters']").click()
         self.wait_until_jquery(10)
 
-        self.driver.find_element_by_xpath("//a[.='%s']" % section_name).click()
-        self.driver.find_element_by_css_selector("span[class*='popup-list-link']").click()
-        self.driver.find_element_by_css_selector("a#specification-edit-elem-link").click()
-        self.wait_until_jquery(15)
-        self.driver.find_element_by_css_selector('.minict_first').click()
-        self.assertTrue(self.driver.find_element_by_css_selector(
-            "#OrderProductSpecificationModel_amount").get_attribute("value") == number_of_pieces)
-
-        self.driver.find_element_by_css_selector("a[onclick*='changeElementParameters']").click()
+        # self.driver.find_element_by_xpath("//a[.='%s']" % section_name).click()
+        # self.wait_until_jquery(5)
+        # self.driver.find_element_by_css_selector("span[class*='popup-list-link']").click()
+        # self.driver.find_element_by_css_selector("a#specification-edit-elem-link").click()
+        # self.wait_until_jquery(15)
+        # # self.driver.find_element_by_css_selector('.minict_first').click()
+        # self.assertTrue(self.driver.find_element_by_css_selector(
+        #     "#OrderProductSpecificationModel_count").get_attribute("value") == number_of_pieces)
+        #
+        # self.driver.find_element_by_css_selector("a[onclick*='changeElementParameters']").click()
 
     def change_element_in_section_to_another_element(self):
         self.driver.find_element_by_css_selector("span[class*='popup-list-link']").click()

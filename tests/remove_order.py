@@ -7,11 +7,12 @@ LOGIN = PASS = 'Anders'
 
 
 def remove_specific_order(order_name):
-    payload_login = {'LoginForm[username]': LOGIN, 'LoginForm[password]': PASS, 'LoginForm[rememberMe]': '0'}
-    url = ''.join([URL, TEST, 'site/login'])
-
     s = requests.session()
-    s.post(url, data=payload_login)
+
+    payload_login = {'LoginForm[username]': LOGIN, 'LoginForm[password]': PASS, 'LoginForm[rememberMe]': '0'}
+    url_login = ''.join([URL, TEST, 'site/login'])
+    s.post(url_login, data=payload_login)
+
     payload_order = {
         'OrderModel[number]': order_name,
         'OrderModel[constructor_id]': '',
