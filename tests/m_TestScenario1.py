@@ -14,7 +14,7 @@ class TestScenario1(Basetest):
 
         order_name = ORDER_NAME_1C
         if 'debug' in config:
-            order_name = "MSDHG002453"
+            order_name = "MSВДВ050011"
         print order_name
         year = "2014"
 
@@ -108,7 +108,10 @@ class TestScenario1(Basetest):
         do_action(["option", ["Выбранные валы", "25x25018"]])
 
         self.go_next()
-        self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        try:
+            self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        except NoSuchElementException:
+            pass
         self.assert_string("Дополнительные материалы")
 
         #step13
@@ -194,7 +197,7 @@ class TestScenario1(Basetest):
         #step26
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
-        self.wait_until_jquery(10)
+        self.wait_until_jquery(30)
         time.sleep(2)
 
         #step27

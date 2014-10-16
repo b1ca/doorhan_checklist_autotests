@@ -1,3 +1,5 @@
+# coding=utf-8
+from __future__ import unicode_literals
 import requests
 from lxml import html
 
@@ -56,4 +58,4 @@ def remove_specific_order(order_name):
 
 
 if __name__ == '__main__':
-    remove_specific_order('NewOrder3536')
+    remove_specific_order('MSВДВ050011')
