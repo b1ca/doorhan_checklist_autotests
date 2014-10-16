@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import random
 import unittest
 from selenium.common.exceptions import NoSuchElementException
-from basetest import Basetest
+from basetest import Basetest, PRODUCT_TYPE
 import time
 
 
@@ -57,7 +57,7 @@ class TestScenario2(Basetest):
         #step05
         self.driver.find_element_by_xpath("//span[text() = \"Гаражные\"]").click()
         self.driver.find_element_by_xpath("//span[text() = \"Секционные\"]").click()
-        self.driver.find_element_by_xpath("//a[text() = \"RSD 02\"]").click()
+        self.driver.find_element_by_xpath("//a[text() = '%s']" % PRODUCT_TYPE).click()
         self.go_next_and_assert_string("Проем")
 
         #step06
@@ -283,7 +283,6 @@ class TestScenario2(Basetest):
 
         #step35
         self.delete_order(new_order_name)
-
 
 if __name__ == '__main__':
     unittest.main()

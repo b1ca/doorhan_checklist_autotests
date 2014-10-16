@@ -5,6 +5,7 @@ import logging
 import random
 import sys
 import os
+import time
 from datetime import datetime
 
 from testconfig import config
@@ -19,6 +20,7 @@ URL = 'http://146.185.169.28/doorhan_test/'
 LOGIN = config['login']
 PASS = config['pass']
 ORDER_NAME_1C = config['order_name_1c']
+PRODUCT_TYPE = config['product_type']
 LOGGER.setLevel(logging.WARNING)
 
 
@@ -142,7 +144,8 @@ class Basetest(unittest.TestCase):
 
     def choose_first_driver(self):
         self.driver.find_element_by_css_selector("#DriveMI_ViewDirectoryDriver").click()
-        self.driver.find_element_by_css_selector("#tabSourceDrive_1 a.select").click()
+        self.wait_until_jquery(5)
+        self.driver.find_elements_by_css_selector("#tabSourceDrive_1 a.select")[1].click()
 
     def choose_first_material(self):
         self.driver.find_element_by_css_selector("#ExtraMaterialsMI_ViewDirectoryMaterials").click()
@@ -247,7 +250,8 @@ class Basetest(unittest.TestCase):
         checkbox_text = "Цех"
         self.driver.find_elements_by_css_selector('.ui-multiselect')[0].click()
         self.driver.find_elements_by_xpath("//label/span[.='%s']/../input" % checkbox_text)[-1].click()
-        self.wait_until_jquery(5)
+        self.driver.find_elements_by_css_selector('.ui-multiselect')[0].click()
+        time.sleep(5)
 
         self.driver.find_element_by_css_selector("a[onclick*='changeElementParameters']").click()
         self.wait_until_jquery(10)

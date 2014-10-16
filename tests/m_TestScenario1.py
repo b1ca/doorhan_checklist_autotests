@@ -5,7 +5,7 @@ import random
 import unittest
 import time
 from testconfig import config
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 
 
 class TestScenario1(Basetest):
@@ -14,7 +14,7 @@ class TestScenario1(Basetest):
 
         order_name = ORDER_NAME_1C
         if 'debug' in config:
-            order_name = "MSВДВ096701"
+            order_name = "MSDHG002453"
         print order_name
         year = "2014"
 
@@ -198,14 +198,24 @@ class TestScenario1(Basetest):
 
         #step27
         self.driver.find_element_by_css_selector("#transferTo1C").click()
-        # TODO unexpected alert
+        try:
+            self.wait_until_alert(20)
+            self.driver.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
         time.sleep(1)
 
         #step28
-        self.driver.find_element_by_css_selector("#outSavePager").click()
+        self.wait_until_jquery(10)
+        self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Уйти со страницы']").click()
         time.sleep(1)
         self.driver.find_element_by_css_selector("#transferTo1C").click()
+        try:
+            self.wait_until_alert(20)
+            self.driver.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
         time.sleep(1)
 
         #step29
@@ -221,7 +231,6 @@ class TestScenario1(Basetest):
 
         #step31
         self.delete_order(order_name)
-
 
 if __name__ == '__main__':
     unittest.main()
