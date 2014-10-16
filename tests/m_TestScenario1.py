@@ -128,7 +128,7 @@ class TestScenario1(Basetest):
 
         #step17
         self.driver.find_element_by_css_selector("a[href*='/graphicCardsView/id/']").click()
-        self.wait_until_jquery(30)
+        self.wait_until_alert(60)
 
         #step18
         self.driver.switch_to.alert.accept()
@@ -194,6 +194,7 @@ class TestScenario1(Basetest):
         #step26
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        self.wait_until_jquery(10)
         time.sleep(2)
 
         #step27
@@ -210,12 +211,13 @@ class TestScenario1(Basetest):
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
         time.sleep(3)
-        self.driver.find_element_by_css_selector("#transferTo1C").click()
-        try:
-            self.wait_until_alert(20)
-            self.driver.switch_to.alert.accept()
-        except NoAlertPresentException:
-            pass
+        # self.driver.find_element_by_css_selector("#transferTo1C").click()
+        # try:
+        #     self.wait_until_alert(20)
+        #     self.driver.switch_to.alert.accept()
+        # except NoAlertPresentException:
+        #     pass
+        self.driver.find_element_by_css_selector("#outSavePager").click()
         time.sleep(3)
 
         #step29
