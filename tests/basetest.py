@@ -150,7 +150,7 @@ class Basetest(unittest.TestCase):
     def choose_first_driver(self):
         self.driver.find_element_by_css_selector("#DriveMI_ViewDirectoryDriver").click()
         self.wait_until_jquery(5)
-        self.driver.find_elements_by_css_selector("#tabSourceDrive_1 a.select")[1].click()
+        self.driver.find_elements_by_css_selector('tr[data-parent]:not([style]) a.select')[0].click()
 
     def choose_first_material(self):
         self.driver.find_element_by_css_selector("#ExtraMaterialsMI_ViewDirectoryMaterials").click()

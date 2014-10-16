@@ -194,7 +194,7 @@ class TestScenario1(Basetest):
         #step26
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
         self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
-        time.sleep(1)
+        time.sleep(2)
 
         #step27
         self.driver.find_element_by_css_selector("#transferTo1C").click()
@@ -203,20 +203,20 @@ class TestScenario1(Basetest):
             self.driver.switch_to.alert.accept()
         except NoAlertPresentException:
             pass
-        time.sleep(1)
+        time.sleep(2)
 
         #step28
         self.wait_until_jquery(10)
         self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
-        self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Уйти со страницы']").click()
-        time.sleep(1)
+        self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        time.sleep(3)
         self.driver.find_element_by_css_selector("#transferTo1C").click()
         try:
             self.wait_until_alert(20)
             self.driver.switch_to.alert.accept()
         except NoAlertPresentException:
             pass
-        time.sleep(1)
+        time.sleep(3)
 
         #step29
         self.driver.find_element_by_css_selector("span[class*=popup-list-link]").click()
