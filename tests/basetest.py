@@ -23,6 +23,11 @@ ORDER_NAME_1C = config['order_name_1c']
 PRODUCT_TYPE = config['product_type']
 LOGGER.setLevel(logging.WARNING)
 
+if 'RSD_02' in PRODUCT_TYPE:
+    PRODUCT_TYPE = 'RSD 02'
+elif 'ISD_01' in PRODUCT_TYPE:
+    PRODUCT_TYPE = 'ISD 01'
+
 
 class Basetest(unittest.TestCase):
     driver = None

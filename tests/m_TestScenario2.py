@@ -10,7 +10,6 @@ import time
 class TestScenario2(Basetest):
 
     def test(self):
-
         do_action = self.do_action
         #step01
 
@@ -138,7 +137,7 @@ class TestScenario2(Basetest):
         do_action(["option", ["Выбранные валы", "25x25018"]])
 
         self.go_next()
-        self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        # self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
         self.assert_string("Дополнительные материалы")
 
         #step17
