@@ -19,14 +19,16 @@ from selenium.webdriver.support import expected_conditions as EC
 URL = 'http://146.185.169.28/doorhan_test/'
 LOGIN = config['login']
 PASS = config['pass']
-ORDER_NAME_1C = config['order_name_1c']
+ORDER_NAME_1C = ''
 PRODUCT_TYPE = config['product_type']
 LOGGER.setLevel(logging.WARNING)
 
 if 'RSD_02' in PRODUCT_TYPE:
     PRODUCT_TYPE = 'RSD 02'
+    ORDER_NAME_1C = 'MSВДВ050011'
 elif 'ISD_01' in PRODUCT_TYPE:
     PRODUCT_TYPE = 'ISD 01'
+    ORDER_NAME_1C = 'MSВДВ096701'
 
 
 class Basetest(unittest.TestCase):
