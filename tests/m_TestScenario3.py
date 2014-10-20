@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import random
 import unittest
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from basetest import Basetest, PRODUCT_TYPE
 import time
 
@@ -122,8 +122,11 @@ class TestScenario3(Basetest):
         do_action(["uncheckbox", ["Использовать соединительные пластины"]])
         # self.go_next_and_assert_string("Расчет пружин и барабанов")
         self.go_next()
-        self.wait_until_alert(10)
-        self.driver.switch_to.alert.accept()
+        try:
+            self.wait_until_alert(10)
+            self.driver.switch_to.alert.accept()
+        except TimeoutException:
+            pass
         self.assert_string("Расчет пружин и барабанов")
         #step14
         try:
@@ -143,6 +146,10 @@ class TestScenario3(Basetest):
         # self.go_next_and_assert_string("Дополнительные материалы")
 
         self.go_next()
+        try:
+            self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        except NoSuchElementException:
+            pass
         self.assert_string("Дополнительные материалы")
 
         #step15

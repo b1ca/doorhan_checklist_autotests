@@ -137,7 +137,10 @@ class TestScenario2(Basetest):
         do_action(["option", ["Выбранные валы", "25x25018"]])
 
         self.go_next()
-        # self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        try:
+            self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        except NoSuchElementException:
+            pass
         self.assert_string("Дополнительные материалы")
 
         #step17

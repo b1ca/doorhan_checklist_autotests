@@ -51,11 +51,14 @@ def remove_specific_order(order_name):
     }
     url_delete = ''.join([URL, TEST, 'constructor/order/delete'])
     r = s.post(url_delete, data=payload_delete)
-    content = r.content
+    content = unicode(r.content, 'utf-8')
 
     for err in ['Error', 'error']:
         assert err not in content
 
 
 if __name__ == '__main__':
-    remove_specific_order('MSВДВ050011')
+    try:
+        remove_specific_order('MSВДВ096288')
+    except IndexError:
+        print 'there is no order with that name.'
