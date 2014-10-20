@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import random
 import unittest
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from basetest import Basetest, PRODUCT_TYPE
 import time
 
@@ -169,7 +169,10 @@ class TestScenario3(Basetest):
 
         #step19
         self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
-        self.driver.switch_to.alert.accept()
+        try:
+            self.driver.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
         self.wait_until_alert(120)
         self.driver.switch_to.alert.accept()
 
