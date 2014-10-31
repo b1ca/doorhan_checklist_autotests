@@ -57,7 +57,7 @@ class TestScenario3(Basetest):
         do_action(["input", ["Глубина гаража", "5000"]])
         do_action(["input", ["Максимальная притолока", "5000"]])
         do_action(["option", ["Тип подъема", "Стандартный наклонный"]])
-        do_action(["option", ["Будущая установка калитки", "Калитка v2"]])
+        do_action(["option", ["Установка профиля для щита", "Калитка v2"]])
         self.go_next_and_assert_string("Дополнительные параметры проема")
 
         #step06
