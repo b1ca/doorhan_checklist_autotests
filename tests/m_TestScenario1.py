@@ -130,16 +130,17 @@ class TestScenario1(Basetest):
         self.go_next_and_assert_graphic_cards_view()
 
         #step17
-        self.driver.find_element_by_css_selector("a[href*='/graphicCardsView/id/']").click()
-        self.wait_until_alert(60)
+        #self.driver.find_element_by_css_selector("a[href*='/graphicCardsView/id/']").click()
+        #self.wait_until_alert(60)
 
         #step18
-        self.driver.switch_to.alert.accept()
-        self.wait_until_alert(120)
-        self.driver.switch_to.alert.accept()
-        self.driver.find_element_by_css_selector("a[href*='/order/update/id/']").click()
-        self.wait_until_jquery(30)
-        self.assertIn("/order/update/id/", self.driver.current_url)
+        self.driver.find_element_by_css_selector("a[href*='order/update/id']").click()
+        #self.driver.switch_to.alert.accept()
+        #self.wait_until_alert(120)
+        #self.driver.switch_to.alert.accept()
+        #self.driver.find_element_by_css_selector("a[href*='/order/update/id/']").click()
+        #self.wait_until_jquery(30)
+        #self.assertIn("/order/update/id/", self.driver.current_url)
 
         #step19
         self.navigate_to_product_specification()

@@ -159,17 +159,18 @@ class TestScenario2(Basetest):
         self.go_next_and_assert_graphic_cards_view()
 
         #step21
-        self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
-        self.driver.switch_to.alert.accept()
-        self.wait_until_alert(120)
-        self.driver.switch_to.alert.accept()
-        self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
-        try:
-            self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
-        except NoSuchElementException:
-            pass
-        self.wait_until_jquery(5)
-        self.driver.find_element_by_css_selector("a[href*='/order/update/id/']").click()
+        self.driver.find_element_by_css_selector("a[href*='order/update/id']").click()
+        #self.driver.find_element_by_css_selector("a[href*='order/graphicCardsView/id/']").click()
+        #self.driver.switch_to.alert.accept()
+        #self.wait_until_alert(120)
+        #self.driver.switch_to.alert.accept()
+        #self.driver.find_element_by_css_selector("a[onclick*='#saveOrder']").click()
+        #try:
+            #self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+        #except NoSuchElementException:
+            #pass
+        #self.wait_until_jquery(5)
+        #self.driver.find_element_by_css_selector("a[href*='/order/update/id/']").click()
 
         #step22
         self.driver.find_element_by_css_selector("span[class*=popup-list-link]").click()
