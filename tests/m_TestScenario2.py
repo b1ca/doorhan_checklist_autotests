@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import random
 import unittest
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
 from basetest import Basetest, PRODUCT_TYPE
 import time
 
@@ -89,7 +89,10 @@ class TestScenario2(Basetest):
 
         #step10
         do_action(["checkbox", ["Облицовка молдингом"]])
-        self.driver.switch_to.alert.accept()
+        try:
+            self.driver.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
         do_action(["checkbox", ["Автоматический подбор шага"]])
         do_action(["option", ["Вариант облицовки", "вариант 2"]])
         do_action(["option", ["Цвет облицовки", "металлик"]])
