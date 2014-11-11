@@ -70,7 +70,7 @@ class TestScenario2(Basetest):
         do_action(["input", ["Расстояние справа", "500"]])
         do_action(["input", ["Глубина гаража", "10000"]])
         do_action(["option", ["Тип подъема", "Стандартный"]])
-        do_action(["option", ["Установка профиля для щита", "Hет"]])
+        do_action(["option", ["Установка профиля для щита", "Без калитки"]])
         self.go_next_and_assert_string("Тип панелей и цвет Щита")
 
         #step08
