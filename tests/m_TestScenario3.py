@@ -130,7 +130,7 @@ class TestScenario3(Basetest):
         self.assert_string("Расчет пружин и барабанов")
         #step14
         try:
-            do_action(["option", ["Выбранные барабаны", "M102 H2250 (OMI 12)"]])
+            do_action(["option", ["Выбранные барабаны", "M102 H3250 (OMI 12)"]])
             do_action(["option", ["Количество пружин", "2"]])
             do_action(["option", ["Количество циклов", "12500"]])
         except (NoSuchElementException, ValueError):
@@ -145,11 +145,14 @@ class TestScenario3(Basetest):
         do_action(["option", ["Выбранные валы", "25x25516"]])
         # self.go_next_and_assert_string("Дополнительные материалы")
 
+        self.wait_until_jquery(10)
         self.go_next()
         try:
+            self.driver.implicitly_wait(2)
             self.driver.find_element_by_xpath("//span[@class='ui-button-text' and .='Да']").click()
+            self.driver.implicitly_wait(10)
         except NoSuchElementException:
-            pass
+            self.driver.implicitly_wait(10)
         self.assert_string("Дополнительные материалы")
 
         #step15
